@@ -2,7 +2,6 @@ package com.bandari.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
@@ -31,7 +30,7 @@ public class Main {
 			}
 		}
 
-		mainFrame = new JFrame("Login");
+		mainFrame = new JFrame("Bandari Electricals...");
 		mainPanel = new JPanel();
 		contentPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
@@ -41,22 +40,30 @@ public class Main {
 		mainFrame.add(mainPanel);
 		mainFrame.setVisible(true);
 		mainFrame.setSize(new Dimension(800, 600));
-
+		
 		double width = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 		double height = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 		mainFrame.setLocation((int) width * 20 / 100, (int) height * 10 / 100);
 		mainFrame.setDefaultCloseOperation(3);
+		mainFrame.setResizable(false);
 	}
 
 	JPanel getLogoPanel() {
 		JPanel logopanel = new JPanel();
-		JLabel company = new JLabel("..");// Bandari Electricals
-		company.setFont(new Font(company.getFont().getName(), 0, 32));
-		logopanel.add(company);
+		//JLabel company = new JLabel("Bandari Electricals");
+		//company.setFont(new Font(company.getFont().getName(), 0, 32));
+		
+		ImageIcon editIcon1 = new ImageIcon("title.png");
+		Image editimage1 = editIcon1.getImage();
+		Image newEditImg1 = editimage1.getScaledInstance(300, 70, 4);
+		ImageIcon editIconNew1 = new ImageIcon(newEditImg1);
+		JLabel editLable1 = new JLabel(editIconNew1, 2);
+		logopanel.add(editLable1);
+		//logopanel.add(company);
 
 		ImageIcon editIcon = new ImageIcon("logout.png");
 		Image editimage = editIcon.getImage();
-		Image newEditImg = editimage.getScaledInstance(45, 45, 4);
+		Image newEditImg = editimage.getScaledInstance(70, 30, 4);
 		ImageIcon editIconNew = new ImageIcon(newEditImg);
 		JLabel editLable = new JLabel(editIconNew, 2);
 		logopanel.add(editLable);
@@ -88,9 +95,8 @@ public class Main {
 		});
 		return logopanel;
 	}
-
-	public static void main(String[] args) throws ClassNotFoundException, InstantiationException,
-			IllegalAccessException, UnsupportedLookAndFeelException {
+	
+	public static void main(String[] args) throws ClassNotFoundException, InstantiationException,IllegalAccessException, UnsupportedLookAndFeelException {
 		new Main();
 	}
 }
