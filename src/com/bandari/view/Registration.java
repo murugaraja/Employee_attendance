@@ -1,5 +1,6 @@
 package com.bandari.view;
 
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,6 +19,10 @@ import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
 public class Registration {
 	JPanel registrationPanel;
+	
+	JPanel feidlPanel;
+	JPanel buttonPanel;
+	
 	JTextField empName;
 	JTextField empId;
 	JTextField empAllotedLeave;
@@ -45,53 +50,60 @@ public class Registration {
 		clear = new JButton("Clear");
 		save = new JButton("Save");
 		back = new JButton("Back");
-
+		
+		feidlPanel = new JPanel();
+		buttonPanel = new JPanel();
+		feidlPanel.setLayout(new GridLayout(0, 2));
+		buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		
 		registrationPanel = new JPanel();
-		registrationPanel.setLayout(new GridLayout(0, 2));
-		registrationPanel.add(new JLabel("Employee Name :"));
-		registrationPanel.add(empName);
-		registrationPanel.add(new JLabel("Employee Id :"));
-		registrationPanel.add(empId);
-		registrationPanel.add(new JLabel("Sex :"));
+		registrationPanel.add(feidlPanel);
+		registrationPanel.add(buttonPanel);
+		registrationPanel.setLayout(new GridLayout(0, 1));
+		feidlPanel.add(new JLabel("Employee Name :"));
+		feidlPanel.add(empName);
+		feidlPanel.add(new JLabel("Employee Id :"));
+		feidlPanel.add(empId);
+		feidlPanel.add(new JLabel("Sex :"));
 		Vector<String> sex = new Vector<String>();
 		sex.add("Male");
 		sex.add("Female");
 		sexCombo = new JComboBox<String>(sex);
-		registrationPanel.add(sexCombo);
+		feidlPanel.add(sexCombo);
 
-		registrationPanel.add(new JLabel("Designation :"));
+		feidlPanel.add(new JLabel("Designation :"));
 		Vector<String> designation = new Vector<String>();
 		designation.add("Electrician");
 		designation.add("Seniour Electrician");
 		designation.add("Labour");
 		designationCombo = new JComboBox<String>(designation);
-		registrationPanel.add(designationCombo);
+		feidlPanel.add(designationCombo);
 
-		registrationPanel.add(new JLabel("DOB :"));
+		feidlPanel.add(new JLabel("DOB :"));
 		UtilDateModel model = new UtilDateModel();
 		JDatePanelImpl datePanel = new JDatePanelImpl(model);
 		dobDatePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
-		registrationPanel.add(dobDatePicker);
+		feidlPanel.add(dobDatePicker);
 
-		registrationPanel.add(new JLabel("DOJ :"));
+		feidlPanel.add(new JLabel("DOJ :"));
 		UtilDateModel model1 = new UtilDateModel();
 		JDatePanelImpl datePanel1 = new JDatePanelImpl(model1);
 		dojdatePicker = new JDatePickerImpl(datePanel1, new DateLabelFormatter());
-		registrationPanel.add(dojdatePicker);
-		registrationPanel.add(new JLabel("Phone Number :"));
-		registrationPanel.add(empPhone);
-		registrationPanel.add(new JLabel("Email Id :"));
-		registrationPanel.add(empEmail);
-		registrationPanel.add(new JLabel("Salary :"));
-		registrationPanel.add(empSalary);
-		registrationPanel.add(new JLabel("Alloted Leave :"));
-		registrationPanel.add(empAllotedLeave);
-		registrationPanel.add(new JLabel("Address :"));
-		registrationPanel.add(empAddress);
+		feidlPanel.add(dojdatePicker);
+		feidlPanel.add(new JLabel("Phone Number :"));
+		feidlPanel.add(empPhone);
+		feidlPanel.add(new JLabel("Email Id :"));
+		feidlPanel.add(empEmail);
+		feidlPanel.add(new JLabel("Salary :"));
+		feidlPanel.add(empSalary);
+		feidlPanel.add(new JLabel("Alloted Leave :"));
+		feidlPanel.add(empAllotedLeave);
+		feidlPanel.add(new JLabel("Address :"));
+		feidlPanel.add(empAddress);
 
-		registrationPanel.add(save);
-		registrationPanel.add(clear);
-		registrationPanel.add(back);
+		buttonPanel.add(save);
+		buttonPanel.add(clear);
+		buttonPanel.add(back);
 
 		clear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

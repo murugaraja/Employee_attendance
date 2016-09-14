@@ -1,5 +1,6 @@
 package com.bandari.view;
 
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -17,6 +18,11 @@ import com.bandari.db.DBConnection;
 
 public class AdminPage {
 	JPanel adminPanel;
+	
+
+	JPanel feidlPanel;
+	JPanel buttonPanel;
+	
 	JButton createNewEmp;
 	JButton report;
 	JButton deleteButton;
@@ -26,24 +32,30 @@ public class AdminPage {
 		ArrayList<Employee> employees = DBConnection.getInstance().readAllEmployeeDetails();
 		checkBoxs = new ArrayList<JCheckBox>();
 
+		feidlPanel = new JPanel();
+		buttonPanel = new JPanel();
+		feidlPanel.setLayout(new GridLayout(0, 8));
+		buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		
+		adminPanel = new JPanel();
 		mainPanel.removeAll();
 		adminPanel = new JPanel();
-		adminPanel.setLayout(new GridLayout(0, 8));
-		adminPanel.add(new JLabel("Employee Id"));
-		adminPanel.add(new JLabel("Employee Name"));
-		adminPanel.add(new JLabel("Alloted Leave"));
-		adminPanel.add(new JLabel("Designation"));
-		adminPanel.add(new JLabel("Salery"));
-		adminPanel.add(new JLabel("Details"));
-		adminPanel.add(new JLabel("Update"));
-		adminPanel.add(new JLabel("Delete"));
+		adminPanel.setLayout(new GridLayout(0, 1));
+		feidlPanel.add(new JLabel("Employee Id"));
+		feidlPanel.add(new JLabel("Employee Name"));
+		feidlPanel.add(new JLabel("Alloted Leave"));
+		feidlPanel.add(new JLabel("Designation"));
+		feidlPanel.add(new JLabel("Salery"));
+		feidlPanel.add(new JLabel("Details"));
+		feidlPanel.add(new JLabel("Update"));
+		feidlPanel.add(new JLabel("Delete"));
 
 		for (int i = 0; i < employees.size(); i++) {
-			adminPanel.add(new JLabel(((Employee) employees.get(i)).getEmpId()));
-			adminPanel.add(new JLabel(((Employee) employees.get(i)).getEmpName()));
-			adminPanel.add(new JLabel(((Employee) employees.get(i)).getAllotedleave()));
-			adminPanel.add(new JLabel(((Employee) employees.get(i)).getDesignation()));
-			adminPanel.add(new JLabel(((Employee) employees.get(i)).getEmpSalary()));
+			feidlPanel.add(new JLabel(((Employee) employees.get(i)).getEmpId()));
+			feidlPanel.add(new JLabel(((Employee) employees.get(i)).getEmpName()));
+			feidlPanel.add(new JLabel(((Employee) employees.get(i)).getAllotedleave()));
+			feidlPanel.add(new JLabel(((Employee) employees.get(i)).getDesignation()));
+			feidlPanel.add(new JLabel(((Employee) employees.get(i)).getEmpSalary()));
 
 			ImageIcon imageIcon = new ImageIcon("detail.png");
 			Image image = imageIcon.getImage();
@@ -51,7 +63,7 @@ public class AdminPage {
 			ImageIcon imageIcon1 = new ImageIcon(newimg);
 			final JLabel detailLable = new JLabel(imageIcon1, 2);
 			detailLable.setName(((Employee) employees.get(i)).getEmpId());
-			adminPanel.add(detailLable);
+			feidlPanel.add(detailLable);
 
 			detailLable.addMouseListener(new MouseListener() {
 				public void mouseReleased(MouseEvent e) {
@@ -77,7 +89,7 @@ public class AdminPage {
 			Image newEditImg = editimage.getScaledInstance(25, 25, 4);
 			ImageIcon editIconNew = new ImageIcon(newEditImg);
 			JLabel editLable = new JLabel(editIconNew, 2);
-			adminPanel.add(editLable);
+			feidlPanel.add(editLable);
 
 			editLable.addMouseListener(new MouseListener() {
 				public void mouseReleased(MouseEvent e) {
@@ -101,22 +113,24 @@ public class AdminPage {
 			JCheckBox box = new JCheckBox();
 			box.setName(((Employee) employees.get(i)).getEmpId());
 			checkBoxs.add(box);
-			adminPanel.add(box);
+			feidlPanel.add(box);
 		}
 
 		createNewEmp = new JButton("Create");
-		adminPanel.add(createNewEmp);
+		buttonPanel.add(createNewEmp);
 		deleteButton = new JButton("Delete");
-		adminPanel.add(deleteButton);
+		buttonPanel.add(deleteButton);
 
 		report = new JButton("Report");
-		adminPanel.add(report);
+		buttonPanel.add(report);
 		report.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new AdminReport(mainPanel, true);
 			}
 
 		});
+		adminPanel.add(feidlPanel);
+		adminPanel.add(buttonPanel);
 		mainPanel.add(adminPanel);
 		mainPanel.updateUI();
 

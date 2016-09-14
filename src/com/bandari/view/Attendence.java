@@ -1,5 +1,7 @@
 package com.bandari.view;
 
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -25,46 +27,61 @@ public class Attendence {
 	ArrayList<String> empIdArray = new ArrayList<String>();
 	ArrayList<JTextField> otHoursArray = new ArrayList<JTextField>();
 
+	JPanel feidlPanel;
+	JPanel buttonPanel;
+
 	public Attendence(final JPanel mainPanel) {
 		ArrayList<Employee> employees = DBConnection.getInstance().readAllEmployeeDetails();
 		save = new JButton("Save");
 		report = new JButton("Report");
 		exit = new JButton("Exit");
-		JTextField otHours = new JTextField("0");
-
+		
 		mainPanel.removeAll();
 		attendencePanel = new JPanel();
-		attendencePanel.setLayout(new java.awt.GridLayout(0, 5));
-		attendencePanel.add(new JLabel("Employee Id"));
-		attendencePanel.add(new JLabel("Employee Name"));
-		attendencePanel.add(new JLabel("Full Day"));
-		attendencePanel.add(new JLabel("Half Day"));
-		attendencePanel.add(new JLabel("Over Time"));
+		attendencePanel.setLayout(new GridLayout(0, 1));
+		
+		feidlPanel = new JPanel();
+		buttonPanel = new JPanel();
+		feidlPanel.setLayout(new GridLayout(0, 5));
+		buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		
+		attendencePanel.add(feidlPanel);
+		attendencePanel.add(buttonPanel);
+		
+		feidlPanel.add(new JLabel("Employee Id"));
+		feidlPanel.add(new JLabel("Employee Name"));
+		feidlPanel.add(new JLabel("Full Day"));
+		feidlPanel.add(new JLabel("Half Day"));
+		feidlPanel.add(new JLabel("Over Time"));
 
 		for (int i = 0; i < employees.size(); i++) {
-			attendencePanel.add(new JLabel(((Employee) employees.get(i)).getEmpId()));
-			attendencePanel.add(new JLabel(((Employee) employees.get(i)).getEmpName()));
+			feidlPanel.add(new JLabel(((Employee) employees.get(i)).getEmpId()));
+			feidlPanel.add(new JLabel(((Employee) employees.get(i)).getEmpName()));
 			ButtonGroup shiftGroup = new ButtonGroup();
 			JRadioButton halfDay = new JRadioButton("Half");
 			JRadioButton fullDay = new JRadioButton("Full");
+			JTextField otHours = new JTextField("0");
 			fullDay.setSelected(true);
 			shiftGroup.add(halfDay);
 			shiftGroup.add(fullDay);
-			attendencePanel.add(halfDay);
-			attendencePanel.add(fullDay);
-			attendencePanel.add(otHours);
+			feidlPanel.add(halfDay);
+			feidlPanel.add(fullDay);
+			feidlPanel.add(otHours);
 
 			shiftTimeArray.add(fullDay);
 			empIdArray.add(((Employee) employees.get(i)).getEmpId());
 			otHoursArray.add(otHours);
 		}
 
-		attendencePanel.add(save);
-		attendencePanel.add(report);
-		attendencePanel.add(exit);
+		buttonPanel.add(save);
+		buttonPanel.add(report);
+		buttonPanel.add(exit);
+
+		attendencePanel.add(feidlPanel);
+		attendencePanel.add(buttonPanel);
 		mainPanel.add(attendencePanel);
 		mainPanel.updateUI();
-
+		
 		report.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new AdminReport(mainPanel, false);

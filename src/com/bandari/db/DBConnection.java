@@ -18,43 +18,54 @@ public class DBConnection {
 		try {
 			Class.forName("org.hsqldb.jdbcDriver");
 			conn = java.sql.DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/", "sa", "");
-			try {
-				Statement statement = conn.createStatement();
-				statement.execute("select * from authentication;");
-				statement.close();
-			} catch (Exception exc) {
-				Statement statement = conn.createStatement();
-				statement.executeQuery("create table if not exists authentication (empname varchar(20), password varchar(20), isadmin boolean);");
-				statement.close();
-
-				statement = conn.createStatement();
-				statement.executeQuery("create table if not exists employee (name varchar(20),id integer,phone varchar(15),email varchar(20),salary varchar(10),address varchar(20),doj date, dob date,sex varchar(10),designation varchar(20),allotedleave integer);");
-				statement.close();
-
-				statement = conn.createStatement();
-				statement.executeQuery("create table if not exists timetable (empid integer, attendance integer,hours integer );");
-				statement.close();
-
-				statement = conn.createStatement();
-				statement.execute("insert into authentication ( empname,password,isadmin) values ('admin','admin123',true);");
-				statement.close();
-
-				statement = conn.createStatement();
-				statement.execute("insert into authentication ( empname,password,isadmin) values ('user','user123',false);");
-				statement.close();
-			}
-
-			return;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
+	
 	public static DBConnection getInstance() {
 		if (dBConnection == null) {
 			dBConnection = new DBConnection();
 		}
+		if(conn == null){
+			try{			
+				conn = java.sql.DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/", "sa", "");			
+			}catch(Exception e){
+			}
+		}
+		init();
 		return dBConnection;
+	}
+
+	private static void init() {
+		try {
+			Statement statement = conn.createStatement();
+			statement.execute("select * from authentication;");
+			statement.close();
+		} catch (Exception exc) {
+			try{
+				Statement statement = conn.createStatement();
+				statement.executeQuery("create table if not exists authentication (empname varchar(20), password varchar(20), isadmin boolean);");
+				statement.close();
+				
+				statement = conn.createStatement();
+				statement.executeQuery("create table if not exists employee (name varchar(20),id integer,phone varchar(15),email varchar(20),salary varchar(10),address varchar(20),doj date, dob date,sex varchar(10),designation varchar(20),allotedleave integer);");
+				statement.close();
+				
+				statement = conn.createStatement();
+				statement.executeQuery("create table if not exists timetable (empid integer, attendance integer,hours integer );");
+				statement.close();
+				
+				statement = conn.createStatement();
+				statement.execute("insert into authentication ( empname,password,isadmin) values ('admin','admin123',true);");
+				statement.close();
+				
+				statement = conn.createStatement();
+				statement.execute("insert into authentication ( empname,password,isadmin) values ('user','user123',false);");
+				statement.close();				
+			}catch(Exception exc1){
+			}
+		}
 	}
 
 	public void shutdown() throws SQLException {
